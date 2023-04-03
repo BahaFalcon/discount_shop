@@ -38,7 +38,7 @@ class User(AbstractBaseUser):
         regex=r'^\+996 \d{3} \d{2}-\d{2}-\d{2}$',
         message="Номер телефона должен быть в формате: '+996 xxx xx-xx-xx'"
     )
-    phone_number = models.CharField('Номер телефона', validators=[phone_regex], max_length=15, unique=True)
+    phone_number = models.CharField('Номер телефона', validators=[phone_regex], max_length=17, unique=True)
     location = models.CharField('Город', max_length=30, choices=LOCATION_CHOICES)
     gender = models.CharField('Пол', max_length=20, choices=GENDER_CHOICES, default='М')
     created_at = models.DateTimeField('Дата создания', auto_now_add=True)
