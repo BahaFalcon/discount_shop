@@ -16,7 +16,7 @@ class User(AbstractBaseUser):
         ('Бишкек', 'Бишкек'),
         ('Ош', 'Ош'),
     )
-    email = models.EmailField('Эл.почта', max_length=100, unique=True)
+    email = models.EmailField('Эл.почта', max_length=100, blank=True, null=True, unique=True)
     password = models.CharField('Пароль', max_length=255)
     is_staff = models.BooleanField(default=False)
     is_active = models.BooleanField(default=True)

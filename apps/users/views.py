@@ -7,20 +7,45 @@ from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 from rest_framework import generics
-from rest_framework import status
+from rest_framework import status, serializers
 from rest_framework.views import APIView
+from django.contrib.auth import authenticate
 from random import randint
 from django.contrib.auth import get_user_model
-# from rest_framework_simplejwt.tokens import RefreshToken
-from .serializers import UserSerializer
+from rest_framework_simplejwt.tokens import RefreshToken
+from rest_framework_simplejwt.views import TokenObtainPairView
+from .serializers import UserSerializer, UserLoginSerializer
 
 User = get_user_model()
 
 
 class RegisterAPIView(generics.CreateAPIView):
     serializer_class = UserSerializer
-    permission_classes = (AllowAny, )
+    permission_classes = (AllowAny,)
 
+
+class UserLoginView(APIView):
+    def post(self, request):
+        serializer = UserLoginSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        data = serializer.validated_data
+
+        phone_number = data['phone_number']
+        password = data['password']
+
+        user = User(phone_number=phone_number, password=password)
+        if not user:
+            raise serializers.ValidationError({'detail': 'Incorrect phone or password'})
+
+        refresh = RefreshToken.for_user(user)
+
+        return Response(
+            {
+                'access': str(refresh.access_token),
+                'refresh': str(refresh)
+            }
+            , status=status.HTTP_200_OK
+        )
 
 # class UserDetailView(APIView):
 #     """
@@ -120,4 +145,3 @@ class RegisterAPIView(generics.CreateAPIView):
 #                 return Response({'error': 'Invalid code'}, status=status.HTTP_400_BAD_REQUEST)
 #         else:
 #             return Response({'error': 'Email, code, and password are required'}, status=status.HTTP_400_BAD_REQUEST)
-
