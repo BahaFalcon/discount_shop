@@ -6,7 +6,7 @@ from .models import User
 @admin.register(User)
 class UserAdmin(admin.ModelAdmin):
     """Пользователь"""
-    list_display = ('email', 'username', 'phone_number')
+    list_display = ('id', 'email', 'username', 'phone_number')
     list_filter = ('location', 'username')
     search_fields = ('username', 'phone_number')
     save_on_top = True

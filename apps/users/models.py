@@ -44,7 +44,7 @@ class User(AbstractBaseUser):
     created_at = models.DateTimeField('Дата создания', auto_now_add=True)
     updated_at = models.DateTimeField('Дата обновления', auto_now=True)
     birth_date = models.DateField('Дата рождения', null=True)
-    reset_password_code = models.IntegerField('Koд для сброса пароля', null=True)
+    reset_password_code = models.IntegerField('Koд для сброса пароля', null=True, blank=True)
 
     USERNAME_FIELD = 'email'
 
