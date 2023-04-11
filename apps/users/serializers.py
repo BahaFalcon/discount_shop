@@ -69,7 +69,7 @@ class UserLoginSerializer(serializers.Serializer):
 
 class QRSerializer(serializers.ModelSerializer):
     """
-    This serializer is the output of create qr code
+    Этот сериализатор является результатом создания QR кода
     """
     id = serializers.IntegerField(default=serializers.CurrentUserDefault)
     token = serializers.SerializerMethodField()

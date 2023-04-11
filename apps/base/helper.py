@@ -3,8 +3,18 @@ from django.core.exceptions import ValidationError
 
 def user_avatar_path(instance, filename):
     # Функция генерирует путь к папке для сохранения изображения пользователя
-    # Путь будет иметь вид: "avatars/user_<id>/<filename>"
+    # Путь будет иметь вид: "avatars/user.username/<filename>"
     return f"avatars/{instance.username}/{filename}"
+
+def category_img_path(instance, filename):
+    # Функция генерирует путь к папке для сохранения изображения категорий
+    # Путь будет иметь вид: "category/title/<filename>"
+    return f"category/{instance.title}/{filename}"
+
+def store_img_path(instance, filename):
+    # Функция генерирует путь к папке для сохранения изображения магазина
+    # Путь будет иметь вид: "store/name/<filename>"
+    return f"store/{instance.name}/{filename}"
 
 # def user_directory_path(instance, filename):
 #     # Функция генерирует путь к папке для сохранения изображения пользователя
