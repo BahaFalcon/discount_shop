@@ -16,6 +16,16 @@ def store_img_path(instance, filename):
     # Путь будет иметь вид: "store/name/<filename>"
     return f"store/{instance.name}/{filename}"
 
+def topical_img_path(instance, filename):
+    # Функция генерирует путь к папке для сохранения изображения актуальное
+    # Путь будет иметь вид: "topical/store_name/<filename>"
+    return f"topical/{instance.store.name}/{filename}"
+
+def promotion_img_path(instance, filename):
+    # Функция генерирует путь к папке для сохранения изображения акции
+    # Путь будет иметь вид: "promotion/store_name/<filename>"
+    return f"promotion/{instance.store.name}/{filename}"
+
 # def user_directory_path(instance, filename):
 #     # Функция генерирует путь к папке для сохранения изображения пользователя
 #     # Путь будет иметь вид: "avatars/user_<id>/<filename>"

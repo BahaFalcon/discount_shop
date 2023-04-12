@@ -1,5 +1,11 @@
 from django.db import models
-from apps.base.helper import category_img_path, validate_size_image, store_img_path
+from apps.base.helper import (
+    category_img_path,
+    validate_size_image,
+    store_img_path,
+    topical_img_path,
+    promotion_img_path
+)
 from django.core.validators import RegexValidator, FileExtensionValidator
 
 
@@ -57,4 +63,65 @@ class Store(models.Model):
 
     def __str__(self):
         return self.name
+
+
+class Topical(models.Model):
+    """Актуальное"""
+    store = models.ForeignKey(
+        Store,
+        on_delete=models.CASCADE,
+        related_name='topicals',
+        verbose_name='Магазин/Организация'
+    )
+    title = models.CharField('Заголовок', max_length=255)
+    value = models.PositiveIntegerField('Скидка', default=0)
+    topical_img = models.ImageField(
+        'Изображение актуальное',
+        upload_to=topical_img_path,
+        validators=[FileExtensionValidator(allowed_extensions=['jpg', 'jpeg']), validate_size_image],
+        help_text='Пожалуйста используйте формат JPEG или JPG'
+    )
+    begin = models.DateField('Начало:')
+    end = models.DateField('Конец:')
+    published = models.DateField('Дата публикации')
+    sub_title = models.CharField('Подзагаловок', max_length=255)
+    description = models.TextField('Описание')
+
+    class Meta:
+        verbose_name = 'Актуальное'
+        verbose_name_plural = 'Актуальные'
+
+    def __str__(self):
+        return f'Актуальное от {self.store.name}'
+
+
+class Promotion(models.Model):
+    """Акции"""
+    store = models.ForeignKey(
+        Store,
+        on_delete=models.CASCADE,
+        related_name='promotions',
+        verbose_name='Акция'
+    )
+    title = models.CharField('Заголовок', max_length=255)
+    promotion_img = models.ImageField(
+        'Изображение акции',
+        upload_to=promotion_img_path,
+        validators=[FileExtensionValidator(allowed_extensions=['jpg', 'jpeg']), validate_size_image],
+        help_text='Пожалуйста используйте формат JPEG или JPG'
+    )
+    published = models.DateField('Дата публикации')
+    begin = models.DateField('Начало:')
+    end = models.DateField('Конец:')
+    sub_title = models.CharField('Подзагаловок', max_length=255)
+    description = models.TextField('Описание')
+
+    class Meta:
+        verbose_name = 'Акция'
+        verbose_name_plural = 'Акции'
+
+    def __str__(self):
+        return f'Акция от {self.store.name}'
+
+
 
