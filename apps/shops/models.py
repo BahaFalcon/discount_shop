@@ -46,7 +46,7 @@ class Store(models.Model):
     )
     phone_number = models.CharField('Номер телефона', validators=[phone_regex], max_length=17, unique=True)
     city = models.CharField('Город', max_length=30, choices=CITY_CHOICES)
-    location = models.TextField('Адресс:', help_text='Улица, номер дома/строения/корпуса, этаж, номер офиса/кабинета')
+    location = models.TextField('Адрес:', help_text='Улица, номер дома/строения/корпуса, этаж, номер офиса/кабинета')
     work_time = models.CharField('Время работы:', max_length=250, help_text='Пример: с 10:00 до 20:00')
     value = models.PositiveIntegerField('Скидка', default=0)
     description = models.TextField('Описание')
@@ -55,7 +55,7 @@ class Store(models.Model):
     updated_at = models.DateTimeField('Дата обновления', auto_now=True)
     whatsapp_link = models.URLField('WhatsApp', null=True, blank=True)
     telegram_link = models.URLField('Telegram', null=True, blank=True)
-    vk_link = models.URLField('WhatsApp', null=True, blank=True)
+    vk_link = models.URLField('VK', null=True, blank=True)
 
     class Meta:
         verbose_name = 'Магазин/Организация'
@@ -81,8 +81,8 @@ class Topical(models.Model):
         validators=[FileExtensionValidator(allowed_extensions=['jpg', 'jpeg']), validate_size_image],
         help_text='Пожалуйста используйте формат JPEG или JPG'
     )
-    begin = models.DateField('Начало:')
-    end = models.DateField('Конец:')
+    begin = models.DateField('Начало:', null=True, blank=True)
+    end = models.DateField('Конец:', null=True, blank=True)
     published = models.DateField('Дата публикации')
     sub_title = models.CharField('Подзагаловок', max_length=255)
     description = models.TextField('Описание')
@@ -111,8 +111,8 @@ class Promotion(models.Model):
         help_text='Пожалуйста используйте формат JPEG или JPG'
     )
     published = models.DateField('Дата публикации')
-    begin = models.DateField('Начало:')
-    end = models.DateField('Конец:')
+    begin = models.DateField('Начало:', null=True, blank=True)
+    end = models.DateField('Конец:',null=True, blank=True)
     sub_title = models.CharField('Подзагаловок', max_length=255)
     description = models.TextField('Описание')
 
