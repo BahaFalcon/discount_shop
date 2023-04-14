@@ -6,7 +6,10 @@ from django.utils.safestring import mark_safe
 @admin.register(Category)
 class CategoryAdmin(admin.ModelAdmin):
     """Категории"""
-    list_display = ('cat_image', 'title',)
+    list_display = ('id', 'get_image', 'title',)
+
+    def get_image(self, obj):
+        return mark_safe(f'<img src={obj.cat_image.url} width="110" height="110"')
 
 
 @admin.register(Store)
