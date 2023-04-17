@@ -55,7 +55,7 @@ class TopicalAdmin(admin.ModelAdmin):
         return ', '.join([store.name for store in self.store.all()[:3]])
 
     def get_image(self, obj):
-        return mark_safe(f'<img src={obj.topical_img.url} width="100" height="110"')
+        return mark_safe(f'<img src={obj.topical_img.url} width="120" height="110"')
 
     def preview(self, obj):
         return mark_safe(f'<img src={obj.topical_img.url} width="430" height="330">')
